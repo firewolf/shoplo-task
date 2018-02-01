@@ -3,11 +3,24 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('style.css') }}" />
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    	<div id="main-container">
+        	<div id="menu-container">
+        	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <p>
+                	<a href="/">strona główna</a> | <a href="/products">lista produktów</a> | <a href="/admin/new-product">dodaj produkt</a> | <a href="/logout">wyloguj</a>
+                </p>
+                <p>Zalogowany jako: <b>{{ app.user.username }}</b> </p>
+            {% else %}
+            	<p><a href="/">strona główna</a> | <a href="/products">lista produktów</a> | <a href="/login">zaloguj</a></p>
+            {% endif %}
+            </div>
+            {% block body %}{% endblock %}
+            {% block javascripts %}{% endblock %}
+        </div>
     </body>
 </html>
