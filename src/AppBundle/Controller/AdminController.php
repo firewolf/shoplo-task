@@ -13,6 +13,7 @@ class AdminController extends Controller
 {
     
     /**
+     * 
      * @Route ("/admin/new-product", name="new product")
      * @param Request $request
      */
@@ -20,10 +21,25 @@ class AdminController extends Controller
         
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->redirectToRoute('success');
+        }
         
         return $this->render ('admin/new-product.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+    
+    /**
+     * 
+     * @Route ("/admin/success", name="success")
+     * @param Request $request
+     * @return Response
+     */
+    public function successAction (Request $request) : Response {
+        return new Response ("produkt dodany");
     }
     
 }

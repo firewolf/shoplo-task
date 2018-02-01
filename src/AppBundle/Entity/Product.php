@@ -6,19 +6,33 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Product
 {
     /**
-     * @Assert\NotBlank(message="Pole nie mo¿e byæ puste.")
+     * @Assert\NotBlank(
+     *      message="Pole nie moÅ¼e byÄ‡ puste."
+     * )
      * @var unknown
      */
     public $name;
     
     /**
-     * @Assert\Length(min=100, minMessage="Opis musi mieæ co najmniej {{ limit }} znaków.")
+     * @Assert\NotBlank(
+     *  message="Pole nie moÅ¼e byÄ‡ puste."
+     * )
+     * @Assert\Length(
+     *      min=2, 
+     *      minMessage="Opis musi mieÄ‡ co najmniej {{ limit }} znakÃ³w."
+     * )
      * @var unknown
      */
     public $description;
     
     /**
-     * @Assert\Currency(message="Proszê podaæ prawid³ow¹ cenê.")
+     * @Assert\NotBlank(
+     *  message="Pole nie moÅ¼e byÄ‡ puste."
+     * )
+     * @Assert\Regex(
+     *      pattern="/^\d+(,\d\d?)?$/", 
+     *      message="ProszÄ™ podaÄ‡ prawidÅ‚owÄ… cenÄ™."
+     * )
      * @var unknown
      */
     public $price;
