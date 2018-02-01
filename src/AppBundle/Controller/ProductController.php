@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Form\ProductType;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\ProductForm;
-use AppBundle\dao\ProductDao;
+use AppBundle\Dao\ProductDao;
 
 class ProductController extends Controller
 {
@@ -37,8 +37,8 @@ class ProductController extends Controller
         
         if ($form->isSubmitted() && $form->isValid()) {
             $this->dao->save($productForm, $this->getUser ());
-            //if ($form->get('save_add'))
-            return $this->redirectToRoute('success');
+            $targetRoute = $form->get ('save_add')->isClicked () ? 'new_product' : 'products';
+            return $this->redirectToRoute($targetRoute);
         }
         
         return $this->render ('admin/new-product.html.twig', [
@@ -48,18 +48,8 @@ class ProductController extends Controller
     }
     
     /**
-     * 
-     * @Route ("/admin/success", name="success")
-     * @param Request $request
-     * @return Response
-     */
-    public function success (Request $request) : Response {
-        return new Response ("produkt dodany");
-    }
-    
-    /**
      *
-     * @Route ("/products", name="success")
+     * @Route ("/products", name="products")
      * @param Request $request
      * @return Response
      */

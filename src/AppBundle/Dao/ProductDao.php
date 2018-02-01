@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\dao;
+namespace AppBundle\Dao;
 
 use AppBundle\Entity\ProductForm;
 use AppBundle\Entity\Product;
