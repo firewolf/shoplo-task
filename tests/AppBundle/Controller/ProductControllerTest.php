@@ -1,0 +1,70 @@
+<?php
+
+namespace Tests\AppBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\Security\Core\User\User;
+
+/**
+ * 
+ * 
+ * @author tmroczkowski
+ */
+class ProductControllerTest extends AbstractTestController
+{
+    
+    /**
+     * 
+     */
+    public function testProducts()
+    {
+        $client = static::createClient();
+        
+        $crawler = $client->request('GET', '/products');
+        
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertContains(
+            'product-list',
+            $crawler->filter('#main-container table')->attr('id')
+            );
+        
+    }
+    
+    public function testNewProduct () {
+        
+        $client = static::createClient();
+        $client->followRedirects ();
+        
+        $crawler = $client->request('GET', '/admin/new-product');
+        
+        $this->assertEquals(
+            Response::HTTP_OK, 
+            $client->getResponse()->getStatusCode()
+        );
+        
+        $this->assertContains(
+            'login',
+            $crawler->filter('#main-container form')->attr('name')
+        );
+        
+    }
+    
+    public function testNewProductLogged () {
+        
+        $client = static::createClient();
+        
+        $this->logIn ($client);
+        
+        $crawler = $client->request('GET', '/admin/new-product');
+        $response = $client->getResponse()->getStatusCode();
+        
+        $this->assertEquals(Response::HTTP_OK, $response);
+        $this->assertContains(
+            'product',
+            $crawler->filter('#main-container form')->attr('name')
+            );
+    }
+}

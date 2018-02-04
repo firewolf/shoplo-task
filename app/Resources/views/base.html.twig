@@ -12,9 +12,9 @@
         	<div id="menu-container">
         	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <p>
-                	<a href="/">strona główna</a> | <a href="/products">lista produktów</a> | <a href="/admin/new-product">dodaj produkt</a> | <a href="/logout">wyloguj</a>
+                	<a href="/">strona główna</a> | <a href="/products">lista produktów</a> | <a href="/admin/new-product">dodaj produkt</a>
                 </p>
-                <p>Zalogowany jako: <b>{{ app.user.username }}</b> </p>
+                <p>Zalogowany jako: <b>{{ app.user.username }}</b> - <a href="/logout">wyloguj</a> </p>
             {% else %}
             	<p><a href="/">strona główna</a> | <a href="/products">lista produktów</a> | <a href="/login">zaloguj</a></p>
             {% endif %}

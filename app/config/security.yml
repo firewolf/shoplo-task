@@ -10,6 +10,9 @@ security:
                 test:
                   password: 'test'
                   roles: ROLE_ADD_PRODUCT
+                example:
+                  password: example
+                  roles: ROLE_ADD_PRODUCT
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -30,6 +33,7 @@ security:
             logout:
                 path: /logout
                 target: /
+            logout_on_user_change: true
     access_control:
         - { path: ^/admin, roles: ROLE_ADD_PRODUCT }
     encoders:

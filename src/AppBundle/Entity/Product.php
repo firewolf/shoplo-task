@@ -19,24 +19,50 @@ class Product
     
     /**
      * @ORM\Column(type="string", length=100)
+     * @var string
      */
     private $name;
     
     /**
      * @ORM\Column(type="decimal", scale=2)
+     * @var float
      */
     private $price;
     
     /**
      * @ORM\Column(type="text")
+     * @var string
      */
     private $description;
     
     /**
      * @ORM\Column(type="string", length=20)
+     * @var string
      */
     private $owner;
     
+    /**
+     * @ORM\Column(type="datetime", options={"default" = "CURRENT_TIMESTAMP"})
+     * @var \DateTime
+     */
+    private $datetime;
+    
+    /**
+     * @return the $datetime
+     */
+    public function getDatetime()
+    {
+        return $this->datetime;
+    }
+
+    /**
+     * @param field_type $datetime
+     */
+    public function setDatetime($datetime)
+    {
+        $this->datetime = $datetime;
+    }
+
     /**
      * @return the $owner
      */

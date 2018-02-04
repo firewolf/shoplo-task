@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Form;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -8,7 +8,7 @@ class ProductForm
 {
     /**
      * @Assert\NotBlank(
-     *      message="Pole nie może być puste."
+     *      message="productform.name.notblank"
      * )
      * @var string
      */
@@ -16,11 +16,11 @@ class ProductForm
     
     /**
      * @Assert\NotBlank(
-     *  message="Pole nie może być puste."
+     *  message="productform.description.notblank"
      * )
      * @Assert\Length(
-     *      min=2, 
-     *      minMessage="Opis musi mieć co najmniej {{ limit }} znaków."
+     *      min=10, 
+     *      minMessage="productform.description.min"
      * )
      * @var string
      */
@@ -28,11 +28,11 @@ class ProductForm
     
     /**
      * @Assert\NotBlank(
-     *  message="Pole nie może być puste."
+     *  message="productform.price.notblank"
      * )
      * @Assert\Regex(
      *      pattern="/^\d+(,\d\d?)?$/", 
-     *      message="Proszę wpisać cenę w formacie: [0-9]+(,[0,9]{1,2})?"
+     *      message="productform.price.regex"
      * )
      * @var string
      */

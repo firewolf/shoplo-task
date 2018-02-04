@@ -1,0 +1,5 @@
+admin.new_product.form.name: Nazwa:
+admin.new_product.form.description: Opis:
+admin.new_product.form.price: Cena \d+(,\d\d?)?:
+admin.new_product.form.save: Zapisz
+admin.new_product.form.save_add: Zapisz i dodaj następny

@@ -2,25 +2,46 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Knp\Component\Pager\PaginatorInterface;
 use AppBundle\Form\ProductType;
-use AppBundle\Entity\Product;
-use AppBundle\Entity\ProductForm;
-use AppBundle\Dao\ProductDao;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Repository\ProductRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Mailer\ProductMailer;
+use AppBundle\Form\ProductForm;
+use AppBundle\Factory\ProductFactory;
 
 class ProductController extends Controller
 {
     /**
      * 
-     * @var ProductDao
+     * @var ProductRepository
      */
-    private $dao;
+    private $repository;
     
-    public function __construct (ProductDao $dao) {
-        $this->dao = $dao;
+    /**
+     * 
+     * @var PaginatorInterface
+     */
+    private $paginator;
+    
+    /**
+     *
+     * @var ProductMailer
+     */
+    private $mailer;
+    
+    /**
+     * 
+     * @param ProductRepository $repository
+     * @param PaginatorInterface $paginator
+     */
+    public function __construct (ProductRepository $repository, PaginatorInterface $paginator, ProductMailer $mailer) {
+        $this->repository = $repository;
+        $this->paginator = $paginator;
+        $this->mailer = $mailer;
     }
     
     /**
@@ -33,15 +54,24 @@ class ProductController extends Controller
         $productForm = new ProductForm();
         
         $form = $this->createForm(ProductType::class, $productForm);
+        
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->dao->save($productForm, $this->getUser ());
+            
+            $product = $this->repository->save(
+                (new ProductFactory())->form2product ($productForm, $this->getUser ())
+            );
+            
+            if ($product) {
+                $this->mailer->notify ($product);
+            }
+            
             $targetRoute = $form->get ('save_add')->isClicked () ? 'new_product' : 'products';
             return $this->redirectToRoute($targetRoute);
         }
         
-        return $this->render ('admin/new-product.html.twig', [
+        return $this->render ('product/new-product.html.twig', [
             'form' => $form->createView()
         ]);
         
@@ -54,9 +84,18 @@ class ProductController extends Controller
      * @return Response
      */
     public function products (Request $request) : Response {
-        $result = $this->dao->findAll ();
-        echo '<pre>'; print_r ($result);
-        return new Response ('test');
+        
+        return $this->render('product/product-list.html.twig', [
+            'pagination' => $this->paginator->paginate(
+                $this->repository->getPaginatorQuery (),
+                $request->query->getInt('page', 1),
+                10,
+                [
+                    'defaultSortFieldName' => 'product.datetime',
+                    'defaultSortDirection' => 'desc',
+                ]
+            )
+        ]);
     }
     
 }

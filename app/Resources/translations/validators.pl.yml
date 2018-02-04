@@ -1,0 +1,5 @@
+productform.name.notblank: Pole "nazwa" nie może być puste.
+productform.description.notblank: Pole "opis" nie może być puste.
+productform.description.min: Pole "opis" musi mieć co najmniej {{ limit }} znaków.
+productform.price.notblank: Pole "cena" nie może być puste.
+productform.price.regex: 'Proszę wpisać w podanym formacie.'

@@ -1,1 +1,2 @@
-"Invalid credentials.": Nieprawidłowe dane logowania.
+login.users: 'Dostępni użytkownicy: [test:test], [example:example]'
+Invalid credentials.: Nieprawidłowa nazwa użytkownika lub hasło.

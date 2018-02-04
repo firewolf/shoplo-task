@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% set sortOptions = { 'sort': app.request.query.get('sort'), 'direction': app.request.query.get('direction') } %}
+
+{% block body %}
+<div class="navigation">{{ knp_pagination_render(pagination) }}</div>
+{# <div class="count">
+    {{ pagination.getTotalItemCount }}
+</div> #}
+<table id="product-list">
+<tr>
+    <th>{{ knp_pagination_sortable(pagination, 'Nazwa', 'product.name') }}</th>
+    <th{% if pagination.isSorted('product.price') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Cena', 'product.price') }}</th>
+    <th>{{ knp_pagination_sortable(pagination, 'Właściciel', 'product.owner') }}</th>
+    <th>{{ knp_pagination_sortable(pagination, 'Data', 'product.datetime', sortOptions) }}</th>
+</tr>
+{% for product in pagination %}
+<tr {% if loop.index is odd %}class="color"{% endif %}>
+    <td>{{ product.name }}</td>
+    <td>{{ product.price|number_format(2, ',', ' ') }}</td>
+    <td>{{ product.owner }}</td>
+    <td>{{ product.datetime|date("Y-m-d") }}<br/>{{ product.datetime|date("H:i:s") }}</td>
+	
+</tr>
+{% endfor %}
+</table>
+<div class="navigation">{{ knp_pagination_render(pagination) }}</div>
+{% endblock %}
