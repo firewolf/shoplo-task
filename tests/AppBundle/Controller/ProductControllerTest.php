@@ -61,6 +61,6 @@ class ProductControllerTest extends AbstractTestController
         $this->assertContains(
             'product',
             $crawler->filter('#main-container form')->attr('name')
-            );
+        );
     }
 }

@@ -1,6 +1,8 @@
 shoplo-task  
 
-instalacja:  
+instalacja: 
+
+- wymagania - zainstalowany composer, pdo-sqlite3
 
 > ../shoplo-task$ composer install  
 
