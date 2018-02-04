@@ -88,6 +88,10 @@ input[type=submit], button[type=submit] {
     cursor: pointer;
 }
 
+input[id=product_price] {
+	text-align:right;
+}
+
 form[name=product] {
 	width: 400px;
 	margin: 0 auto;

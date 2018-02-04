@@ -19,7 +19,7 @@ class ProductForm
      *  message="productform.description.notblank"
      * )
      * @Assert\Length(
-     *      min=10, 
+     *      min=100, 
      *      minMessage="productform.description.min"
      * )
      * @var string
