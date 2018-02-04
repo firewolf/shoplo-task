@@ -16,3 +16,5 @@
 /vendor/
 /web/bundles/
 !/var/data
+/var/data/*
+!var/data/.gitkeep
