@@ -7,9 +7,18 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\BrowserKit\Cookie;
 
+/**
+ * 
+ * 
+ * @author tmroczkowski
+ */
 abstract class AbstractTestController extends WebTestCase
 {
     
+    /**
+     * 
+     * @param Client $client
+     */
     protected function logIn(Client $client)
     {
         $session = $client->getContainer()->get('session');

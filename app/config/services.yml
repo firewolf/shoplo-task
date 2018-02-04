@@ -35,6 +35,7 @@ services:
     #     arguments:
     #         $someArgument: 'some_value'
     AppBundle\Mailer\ProductMailer:
+        public: true
         arguments:
             $receivers: '%new_product_notify%'
             $from: '%source_mail%'

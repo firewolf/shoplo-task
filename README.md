@@ -2,10 +2,10 @@ shoplo-task
 
 instalacja:  
 
-> composer install  
-> php bin/console doctrine:database:update --force  
+> ../shoplo-task$ composer install  
+> ../shoplo-task$ php bin/console doctrine:database:update --force  
 
 zdefiniowani użytkownicy:  
-test:test  
-example:example  
+> test:test  
+> example:example  
 

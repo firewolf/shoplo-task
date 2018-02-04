@@ -2,12 +2,11 @@
 
 namespace Tests\AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class SecurityControllerTest extends AbstractTestController
 {
-    public function testLogin()
+    public function testLoginPage()
     {
         $client = static::createClient();
         
@@ -18,8 +17,6 @@ class SecurityControllerTest extends AbstractTestController
             'login',
             $crawler->filter('#main-container form')->attr('name')
         );
-        
-//         $client->logIn ($client)
         
     }
     

@@ -13,8 +13,14 @@ use AppBundle\Mailer\ProductMailer;
 use AppBundle\Form\ProductForm;
 use AppBundle\Factory\ProductFactory;
 
+/**
+ * 
+ * 
+ * @author tmroczkowski
+ */
 class ProductController extends Controller
 {
+    
     /**
      * 
      * @var ProductRepository
@@ -37,6 +43,7 @@ class ProductController extends Controller
      * 
      * @param ProductRepository $repository
      * @param PaginatorInterface $paginator
+     * @param ProductMailer $mailer
      */
     public function __construct (ProductRepository $repository, PaginatorInterface $paginator, ProductMailer $mailer) {
         $this->repository = $repository;
@@ -48,6 +55,7 @@ class ProductController extends Controller
      * 
      * @Route ("/admin/new-product", name="new_product")
      * @param Request $request
+     * @return Response
      */
     public function newProduct(Request $request) : Response {
         
@@ -67,8 +75,10 @@ class ProductController extends Controller
                 $this->mailer->notify ($product);
             }
             
-            $targetRoute = $form->get ('save_add')->isClicked () ? 'new_product' : 'products';
-            return $this->redirectToRoute($targetRoute);
+            return $this->redirectToRoute($form->get ('save_add')->isClicked () ? 
+                'new_product' : 
+                'products'
+            );
         }
         
         return $this->render ('product/new-product.html.twig', [
