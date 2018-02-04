@@ -1,5 +1,11 @@
-shoplo-task
+shoplo-task  
 
-zdefiniowani użytkownicy:
-test:test
-example:example
+instalacja:  
+
+> composer install  
+> php bin/console doctrine:database:update --force  
+
+zdefiniowani użytkownicy:  
+test:test  
+example:example  
+
