@@ -8,10 +8,10 @@ security:
             memory: 
               users: 
                 test:
-                  password: 'test'
+                  password: $2y$10$oAbcAqd6X4x2nsTvnE1aouH1xYf8MfQeqbmjJxZTf2E3zAGRys2QC
                   roles: ROLE_ADD_PRODUCT
                 example:
-                  password: example
+                  password: $2y$10$AWp7uhjbWOYA5L0mUvLxcu6K4AUTelMw6ys7lam3qr.o9LT/AXQ6C
                   roles: ROLE_ADD_PRODUCT
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -37,4 +37,6 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADD_PRODUCT }
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 10

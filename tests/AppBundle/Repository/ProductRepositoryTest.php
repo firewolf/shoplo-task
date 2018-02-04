@@ -35,8 +35,8 @@ class ProductRepositoryTest extends KernelTestCase
         
         $product = (new ProductRepository($this->doctrine))->save(
             (new ProductFactory())->form2product(new class () extends ProductForm {
-                public $name = 'some name';
-                public $description = 'some description';
+                public $name = 'Produkt';
+                public $description = 'Bardzo długi opis. Bardzo długi opis. Bardzo długi opis. Bardzo długi opis. Bardzo długi opis. Bardzo długi opis.';
                 public $price = '10,10';
             }, new User('test', 'test'))
         );
