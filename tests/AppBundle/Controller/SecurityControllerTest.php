@@ -4,8 +4,18 @@ namespace Tests\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * 
+ * 
+ * @author tmroczkowski
+ */
 class SecurityControllerTest extends AbstractTestController
 {
+    
+    /**
+     * 
+     * 
+     */
     public function testLoginPage()
     {
         $client = static::createClient();

@@ -61,7 +61,7 @@ class ProductMailer
      * @param Product $product
      * @return number
      */
-    public function notify(Product $product)
+    public function notify(Product $product) : int
     {
         $body = $this->twig->render('Emails/product-notify.html.twig', [
             'product' => $product

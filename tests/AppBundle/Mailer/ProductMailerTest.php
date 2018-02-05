@@ -29,6 +29,7 @@ class ProductMailerTest extends KernelTestCase
         $mailSentCount = $this->mailer->notify(new class () extends Product {
            public $name = 'test';
            public $description = 'description';
+           public $price = 0.0;
         });
         
         $this->assertEquals (1, $mailSentCount);

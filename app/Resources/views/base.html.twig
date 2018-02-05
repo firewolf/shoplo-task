@@ -1,3 +1,6 @@
+{% set route = app.request.attributes.get('_route') %}
+{% set authenticated = is_granted('IS_AUTHENTICATED_FULLY') %}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,14 +13,19 @@
     <body>
     	<div id="main-container">
         	<div id="menu-container">
-        	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        	{% if authenticated %}
                 <p>
-                	<a href="/">strona główna</a> | <a href="/products">lista produktów</a> | <a href="/admin/new-product">dodaj produkt</a>
+                	Zalogowany jako: <b>{{ app.user }}</b> - <a href="/logout">wyloguj</a> 
                 </p>
-                <p>Zalogowany jako: <b>{{ app.user }}</b> - <a href="/logout">wyloguj</a> </p>
-            {% else %}
-            	<p><a href="/">strona główna</a> | <a href="/products">lista produktów</a> | <a href="/login">zaloguj</a></p>
             {% endif %}
+        		<p>
+        			  <a href="/" class="{{ (route == 'homepage') ? 'active' : '' }}">strona główna</a> | <a href="/products" class="{{ route == 'products' ? 'active' : '' }}">lista produktów</a>
+        	{% if authenticated %}
+                	 | <a href="/admin/new-product" class="{{ route == 'new_product' ? 'active' : '' }}">dodaj produkt</a>
+            {% else %}
+            	     | <a href="/login" class="{{ route == 'login' ? 'active' : '' }}">zaloguj</a>
+            {% endif %}
+            	</p>
             </div>
             {% block body %}{% endblock %}
             {% block javascripts %}{% endblock %}

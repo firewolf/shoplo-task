@@ -4,6 +4,11 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * 
+ * 
+ * @author tmroczkowski
+ */
 class ProductForm
 {
     /**

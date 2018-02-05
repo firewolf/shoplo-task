@@ -5,140 +5,150 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * 
  * @ORM\Entity
  * @ORM\Table(name="product")
+ * @author tmroczkowski
  */
 class Product
 {
+    
     /**
+     * 
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @var int
      */
     private $id;
     
     /**
+     * 
      * @ORM\Column(type="string", length=100)
      * @var string
      */
     private $name;
     
     /**
+     * 
      * @ORM\Column(type="decimal", scale=2)
      * @var float
      */
     private $price;
     
     /**
+     * 
      * @ORM\Column(type="text")
      * @var string
      */
     private $description;
     
     /**
+     * 
      * @ORM\Column(type="string", length=20)
      * @var string
      */
     private $owner;
     
     /**
+     * 
      * @ORM\Column(type="datetime", options={"default" = "CURRENT_TIMESTAMP"})
      * @var \DateTime
      */
     private $datetime;
     
     /**
-     * @return the $datetime
+     * @return \DateTime $datetime
      */
-    public function getDatetime()
+    public function getDatetime() : \DateTime
     {
         return $this->datetime;
     }
 
     /**
-     * @param field_type $datetime
+     * @param \DateTime $datetime
      */
-    public function setDatetime($datetime)
+    public function setDatetime(\DateTime $datetime)
     {
         $this->datetime = $datetime;
     }
 
     /**
-     * @return the $owner
+     * @return string $owner
      */
-    public function getOwner()
+    public function getOwner() : string
     {
         return $this->owner;
     }
 
     /**
-     * @param field_type $owner
+     * @param string $owner
      */
-    public function setOwner($owner)
+    public function setOwner(string $owner)
     {
         $this->owner = $owner;
     }
 
     /**
-     * @return the $id
+     * @return int $id
      */
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
 
     /**
-     * @return the $name
+     * @return string $name
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
 
     /**
-     * @return the $price
+     * @return float $price
      */
-    public function getPrice()
+    public function getPrice() : float
     {
         return $this->price;
     }
 
     /**
-     * @return the $description
+     * @return string $description
      */
-    public function getDescription()
+    public function getDescription() : string
     {
         return $this->description;
     }
 
     /**
-     * @param field_type $id
+     * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
     }
 
     /**
-     * @param field_type $name
+     * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
 
     /**
-     * @param field_type $price
+     * @param float $price
      */
-    public function setPrice($price)
+    public function setPrice(float $price)
     {
         $this->price = $price;
     }
 
     /**
-     * @param field_type $description
+     * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         $this->description = $description;
     }

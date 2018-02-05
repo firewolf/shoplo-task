@@ -5,8 +5,8 @@ namespace AppBundle\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use AppBundle\Entity\Product;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Security\Core\User\User;
-use AppBundle\Form\ProductForm;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query;
 
 /**
  * 
@@ -16,6 +16,10 @@ use AppBundle\Form\ProductForm;
 class ProductRepository extends ServiceEntityRepository
 {
     
+    /**
+     * 
+     * @var EntityManager
+     */
     private $manager;
     
     /**
@@ -43,10 +47,10 @@ class ProductRepository extends ServiceEntityRepository
     
     /**
      * 
-     * @param unknown $id
+     * @param int $id
      * @return object|NULL
      */
-    public function findById ($id) {
+    public function findById (int $id) : Product {
         return $this->manager->find(Product::class, $id);
     }
     
@@ -54,7 +58,7 @@ class ProductRepository extends ServiceEntityRepository
      * 
      * @return \Doctrine\ORM\Query
      */
-    public function getPaginatorQuery () {
+    public function getPaginatorQuery () : Query {
         return $this->manager->createQuery('SELECT product FROM AppBundle\Entity\Product product');
     }
     

@@ -10,7 +10,6 @@ use AppBundle\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Mailer\ProductMailer;
-use AppBundle\Form\ProductForm;
 use AppBundle\Factory\ProductFactory;
 
 /**
@@ -59,18 +58,14 @@ class ProductController extends Controller
      */
     public function newProduct(Request $request) : Response {
         
-        $productForm = new ProductForm();
-        
-        $form = $this->createForm(ProductType::class, $productForm);
-        
+        $form = $this->createForm(ProductType::class);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            
             $product = $this->repository->save(
-                (new ProductFactory())->form2product ($productForm, $this->getUser ())
+                (new ProductFactory())->form2product ($form->getData (), $this->getUser ())
             );
-            
+                
             if ($product) {
                 $this->mailer->notify ($product);
             }

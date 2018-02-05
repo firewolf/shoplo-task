@@ -8,8 +8,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * 
+ * 
+ * @author tmroczkowski
+ */
 class ProductType extends AbstractType
 {
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Symfony\Component\Form\AbstractType::configureOptions()
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -17,6 +28,11 @@ class ProductType extends AbstractType
         ]);
     }
     
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Symfony\Component\Form\AbstractType::buildForm()
+     */
     public function buildForm (FormBuilderInterface $builder, array $options) {
         
         $builder

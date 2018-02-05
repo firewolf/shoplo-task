@@ -5,10 +5,21 @@ use AppBundle\Form\ProductForm;
 use Symfony\Component\Security\Core\User\User;
 use AppBundle\Entity\Product;
 
+/**
+ * 
+ * 
+ * @author tmroczkowski
+ */
 class ProductFactory
 {
     
-    public function form2product (ProductForm $form, User $owner) {
+    /**
+     * 
+     * @param ProductForm $form
+     * @param User $owner
+     * @return \AppBundle\Entity\Product
+     */
+    public function form2product (ProductForm $form, User $owner) : Product {
         
         $product = new Product();
         

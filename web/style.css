@@ -2,7 +2,8 @@
 
 body { 
 	background: white; 
-	font: 12px/1.5 sans-serif; 
+	font: 14px Arial; 
+	color: #444;
 }
 
 h1, h2 { 
@@ -23,7 +24,7 @@ p {
 }
 
 a { 
-	color: #0000F0; 
+	color: #00aadd; 
 	text-decoration: none;
 }
 
@@ -38,12 +39,16 @@ code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break
 #main-container {
 	background: #FFF; 
 	margin: 1em auto; 
-	max-width: 800px; 
+	max-width: 840px; 
 	width: 95%;
 }
 
 #menu-container {
 	text-align: right;
+}
+
+#menu-container a.active {
+	text-decoration:underline;
 }
 
 form {
@@ -57,13 +62,21 @@ form[name=login] {
 	margin: 0 auto;
 }
 
-form[name=login] div:FIRST-CHILD {
+form[name=login] div:first-child {
 	text-align:right;
 }
 
 form[name=login] .error {
 	color: red;
-	font-weight: bold;	
+	font-weight: bold;
+	text-align:center;
+	padding: 4px;
+}
+
+form[name=login] div:first-child {
+	color: #aaa;
+	font-style: italic;
+	font-size: 12px;
 }
 
 input[type=text], select, input[type=password], textarea {
@@ -74,7 +87,6 @@ input[type=text], select, input[type=password], textarea {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    font: 12px sans-serif;
 }
 
 input[type=submit], button[type=submit] {
@@ -128,34 +140,31 @@ nav ul li a, nav ul li span {
 
 #product-list {
 	width:100%;
+	font-size: 14px;
+	color: #444;
 }
 
 #product-list th {
 	font-weight: normal;
 	text-align: center;	
+	padding: 14px 20px;
+	background: #efefef;
+	width: 100px;
 }
 
-#product-list th:NTH-CHILD(2) {
-	width: 90px;
+#product-list th:first-child {
+	width: inherit;
 }
 
-#product-list th:NTH-CHILD(3) {
-	width: 90px;
-}
-
-#product-list th:LAST-CHILD {
-	width: 90px;
-}
-
-#product-list td:NTH-CHILD(2) {
+#product-list td:nth-child(2) {
 	text-align: right;
 }
 
-#product-list td:NTH-CHILD(3) {
+#product-list td:nth-child(3) {
 	text-align: center;
 }
 
-#product-list td:LAST-CHILD {
+#product-list td:last-child {
 	text-align: right;
 }
 
@@ -167,8 +176,8 @@ nav ul li a, nav ul li span {
     border: 1px solid #ccc;
 }
 
-#product-list th, #product-list td {
-	padding: 14px 20px;
+#product-list td {
+	padding: 8px 20px;
 }
 
 #product-list a.desc:after {
