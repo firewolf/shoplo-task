@@ -1,5 +1,6 @@
 {% set route = app.request.attributes.get('_route') %}
 {% set authenticated = is_granted('IS_AUTHENTICATED_FULLY') %}
+{% trans_default_domain 'messages' %}
 
 <!DOCTYPE html>
 <html>
@@ -15,15 +16,15 @@
         	<div id="menu-container">
         	{% if authenticated %}
                 <p>
-                	Zalogowany jako: <b>{{ app.user }}</b> - <a href="/logout">wyloguj</a> 
+                	{{'base.logged_as'|trans}} <b>{{app.user}}</b> - <a href="/logout">{{'base.logout'|trans}}</a> 
                 </p>
             {% endif %}
         		<p>
-        			  <a href="/" class="{{ (route == 'homepage') ? 'active' : '' }}">strona główna</a> | <a href="/products" class="{{ route == 'products' ? 'active' : '' }}">lista produktów</a>
+        			  <a href="/" class="{{ (route == 'homepage') ? 'active' : '' }}">{{ 'base.menu.main_page'|trans }}</a> | <a href="/products" class="{{ route == 'products' ? 'active' : '' }}">{{ 'base.menu.product_list'|trans }}</a>
         	{% if authenticated %}
-                	 | <a href="/admin/new-product" class="{{ route == 'new_product' ? 'active' : '' }}">dodaj produkt</a>
+                	 | <a href="/admin/new-product" class="{{ route == 'new_product' ? 'active' : '' }}">{{ 'base.menu.add_product'|trans }}</a>
             {% else %}
-            	     | <a href="/login" class="{{ route == 'login' ? 'active' : '' }}">zaloguj</a>
+            	     | <a href="/login" class="{{ route == 'login' ? 'active' : '' }}">{{ 'base.login'|trans }}</a>
             {% endif %}
             	</p>
             </div>

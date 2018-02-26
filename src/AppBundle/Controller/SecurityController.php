@@ -6,6 +6,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * 
+ * 
+ * @author Symfony
+ */
 class SecurityController extends Controller
 {
     

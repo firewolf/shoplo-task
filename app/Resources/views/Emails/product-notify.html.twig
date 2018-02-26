@@ -1,6 +1,7 @@
 {# notyfikacja o nowym produkcie #}
+{% trans_default_domain 'mail' %}
 
-Dodano nowy produkt: </br>
-Nazwa: {{ product.name }} </br>
-Opis: {{ product.description }} </br>
-Cena: {{ product.price }} </br>
+{{ 'body.added_new_product'|trans}} </br>
+{{ 'body.name'|trans}} {{ product.name }} </br>
+{{ 'body.description'|trans}} {{ product.description }} </br>
+{{ 'body.price'|trans}} {{ product.price }}

@@ -25,7 +25,7 @@ class ProductControllerTest extends AbstractTestController
         $this->assertContains(
             'product-list',
             $crawler->filter('#main-container table')->attr('id')
-            );
+        );
         
     }
     
@@ -52,7 +52,7 @@ class ProductControllerTest extends AbstractTestController
         
         $client = static::createClient();
         
-        $this->logIn ($client);
+        $this->login ($client);
         
         $crawler = $client->request('GET', '/admin/new-product');
         $response = $client->getResponse()->getStatusCode();

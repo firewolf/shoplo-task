@@ -1,5 +1,15 @@
+base.logged_as: 'Zalogowany jako:'
+base.logout: wyloguj
+base.login: zaloguj
+base.menu.main_page: strona główna
+base.menu.product_list: lista produktów
+base.menu.add_product: dodaj produkt
 admin.new_product.form.name: 'Nazwa:'
 admin.new_product.form.description: 'Opis:'
 admin.new_product.form.price: 'Cena "\d+(,\d\d?)?":'
 admin.new_product.form.save: Zapisz
 admin.new_product.form.save_add: Zapisz i dodaj następny
+product_list.table.name: Nazwa
+product_list.table.price: Cena
+product_list.table.owner: Właściciel
+product_list.table.date: Data

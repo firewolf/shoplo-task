@@ -7,6 +7,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use AppBundle\Command\AddProductCommand;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * 
@@ -17,6 +21,20 @@ class ProductType extends AbstractType
 {
     
     /**
+     *
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+    
+    /**
+     * 
+     * @param TokenStorageInterface $tokenStorage
+     */
+    public function __construct(TokenStorageInterface $tokenStorage) {
+        $this->tokenStorage = $tokenStorage;
+    }
+    
+    /**
      * 
      * {@inheritDoc}
      * @see \Symfony\Component\Form\AbstractType::configureOptions()
@@ -24,7 +42,7 @@ class ProductType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ProductForm::class
+            'data_class' => AddProductCommand::class
         ]);
     }
     
@@ -42,7 +60,19 @@ class ProductType extends AbstractType
             ->add ('save_add', SubmitType::class, ['label' => 'admin.new_product.form.save_add'])
             ->add ('save', SubmitType::class, ['label' => 'admin.new_product.form.save'])
         ;
+        
+        $builder->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onSubmit']);
             
     }
+    
+    /**
+     * 
+     * @param FormEvent $event
+     */
+    public function onSubmit (FormEvent $event) {
+        $event->getData ()->owner = $this->tokenStorage->getToken()->getUser();
+        $event->setData($event->getData ());
+    }
+    
 }
 

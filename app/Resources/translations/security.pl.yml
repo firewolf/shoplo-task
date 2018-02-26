@@ -1,2 +1,5 @@
 login.users: 'Dostępni użytkownicy: [test:test], [example:example]'
 Invalid credentials.: Nieprawidłowa nazwa użytkownika lub hasło.
+form.username: 'Nazwa użytkownika:'
+form.password: 'Hasło:'
+form.submit: Zaloguj

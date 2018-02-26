@@ -6,11 +6,10 @@ use Knp\Component\Pager\PaginatorInterface;
 use AppBundle\Form\ProductType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use AppBundle\Mailer\ProductMailer;
-use AppBundle\Factory\ProductFactory;
+use SimpleBus\Message\Bus\MessageBus;
+use AppBundle\Query\GetProductList;
 
 /**
  * 
@@ -22,32 +21,36 @@ class ProductController extends Controller
     
     /**
      * 
-     * @var ProductRepository
-     */
-    private $repository;
-    
-    /**
-     * 
      * @var PaginatorInterface
      */
     private $paginator;
     
     /**
-     *
-     * @var ProductMailer
+     * 
+     * @var MessageBus
      */
-    private $mailer;
+    private $commandBus;
     
     /**
      * 
-     * @param ProductRepository $repository
-     * @param PaginatorInterface $paginator
-     * @param ProductMailer $mailer
+     * @var GetProductList
      */
-    public function __construct (ProductRepository $repository, PaginatorInterface $paginator, ProductMailer $mailer) {
-        $this->repository = $repository;
+    private $productListQuery;
+    
+    /**
+     * 
+     * @param PaginatorInterface $paginator
+     * @param MessageBus $commandBus
+     * @param GetProductList $productListQuery
+     */
+    public function __construct (
+        PaginatorInterface $paginator, 
+        MessageBus $commandBus, 
+        GetProductList $productListQuery
+    ) {
         $this->paginator = $paginator;
-        $this->mailer = $mailer;
+        $this->commandBus = $commandBus;
+        $this->productListQuery = $productListQuery;
     }
     
     /**
@@ -62,24 +65,17 @@ class ProductController extends Controller
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $product = $this->repository->save(
-                (new ProductFactory())->form2product ($form->getData (), $this->getUser ())
-            );
-                
-            if ($product) {
-                $this->mailer->notify ($product);
-            }
+
+            $this->commandBus->handle($form->getData());
             
-            return $this->redirectToRoute($form->get ('save_add')->isClicked () ? 
-                'new_product' : 
-                'products'
+            return $this->redirectToRoute(
+                $form->get ('save_add')->isClicked () ? 'new_product' : 'products'
             );
         }
         
         return $this->render ('product/new-product.html.twig', [
             'form' => $form->createView()
         ]);
-        
     }
     
     /**
@@ -90,16 +86,34 @@ class ProductController extends Controller
      */
     public function products (Request $request) : Response {
         
+        $page = $request->query->getInt('page', 1);
+        
+        $defaultSortFieldName = 'datetime';
+        $defaultSortDirection = 'desc';
+        $limit = 10;
+        
+        $sortFieldName = $request->query->get('sort', $defaultSortFieldName);
+        $sortDirection = $request->query->get('direction', $defaultSortDirection);
+        
+        $results = $this->productListQuery->execute (
+            $sortFieldName, 
+            $sortDirection, 
+            $limit * ($page - 1), 
+            $limit
+        );
+        
+        $pagination = $this->paginator->paginate([], $page, 10,
+            [
+                'defaultSortFieldName' => $defaultSortFieldName,
+                'defaultSortDirection' => $defaultSortDirection
+            ]
+        );
+        
+        $pagination->setItems ($results->items);
+        $pagination->setTotalItemCount($results->count);
+        
         return $this->render('product/product-list.html.twig', [
-            'pagination' => $this->paginator->paginate(
-                $this->repository->getPaginatorQuery (),
-                $request->query->getInt('page', 1),
-                10,
-                [
-                    'defaultSortFieldName' => 'product.datetime',
-                    'defaultSortDirection' => 'desc',
-                ]
-            )
+            'pagination' => $pagination
         ]);
     }
     

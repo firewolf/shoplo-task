@@ -1,0 +1,5 @@
+subject.added_new_product: Dodano nowy produkt.
+body.added_new_product: "Dodano nowy produkt:"
+body.name: "Nazwa:"
+body.description: "Opis:"
+body.price: "Cena:"

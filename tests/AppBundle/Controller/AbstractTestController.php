@@ -19,7 +19,7 @@ abstract class AbstractTestController extends WebTestCase
      * 
      * @param Client $client
      */
-    protected function logIn(Client $client)
+    protected function login(Client $client)
     {
         $session = $client->getContainer()->get('session');
         

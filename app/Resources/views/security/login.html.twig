@@ -11,14 +11,14 @@
     <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 	<div>
-		<label for="username">Nazwa użytkownika:</label>
+		<label for="username">{{'form.username'|trans}}</label>
 		<input type="text" id="username" name="_username" value="{{ last_username }}" />
 	</div>
     <div>
-        <label for="password">Hasło:</label>
+        <label for="password">{{'form.password'|trans}}</label>
         <input type="password" id="password" name="_password" />
     </div>
-    <div><button type="submit">Zaloguj</button></div>
+    <div><button type="submit">{{'form.submit'|trans}}</button></div>
     
 </form>
 

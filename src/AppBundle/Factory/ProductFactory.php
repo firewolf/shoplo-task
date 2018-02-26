@@ -1,9 +1,9 @@
 <?php
 namespace AppBundle\Factory;
 
-use AppBundle\Form\ProductForm;
 use Symfony\Component\Security\Core\User\User;
 use AppBundle\Entity\Product;
+use AppBundle\Command\AddProductCommand;
 
 /**
  * 
@@ -15,27 +15,23 @@ class ProductFactory
     
     /**
      * 
-     * @param ProductForm $form
+     * @param AddProductCommand $command
      * @param User $owner
-     * @return \AppBundle\Entity\Product
+     * @return Product
      */
-    public function form2product (ProductForm $form, User $owner) : Product {
+    public function create (AddProductCommand $command) : Product {
         
         $product = new Product();
         
-        $product->setName($form->name);
-        $product->setDescription($form->description);
+        $product->setName($command->name);
+        $product->setDescription($command->description);
         
         $product->setPrice(
-            str_replace(',', '.', $form->price) * 1.0
+            str_replace(',', '.', $command->price) * 1.0
         );
         
-        $product->setOwner($owner);
-        $product->setDatetime(new \DateTime());
+        $product->setOwner($command->owner);
         
         return $product;
-        
     }
-    
 }
-
