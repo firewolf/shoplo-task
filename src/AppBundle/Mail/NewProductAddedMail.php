@@ -1,11 +1,17 @@
 <?php
 
-namespace AppBundle\CommandHandler;
+namespace AppBundle\Mail;
 
-use AppBundle\Command\MailProductAddedCommand;
+use AppBundle\Entity\Product;
 use Symfony\Component\Translation\TranslatorInterface;
+use AppBundle\Query\ProductView;
 
-class MailProductAddedHandler
+/**
+ * 
+ * 
+ * @author tmroczkowski
+ */
+class NewProductAddedMail
 {
     
     /**
@@ -33,7 +39,7 @@ class MailProductAddedHandler
     private $from;
     
     /**
-     * 
+     *
      * @var TranslatorInterface
      */
     private $translator;
@@ -61,20 +67,19 @@ class MailProductAddedHandler
     }
     
     /**
-     * 
-     * @param MailProductAddedCommand $command
+     *
+     * @param Product $product
      */
-    public function handle (MailProductAddedCommand $command) {
+    public function sendMessage (ProductView $product) {
         
         $message = new \Swift_Message();
         $message->setSubject($this->translator->trans('subject.added_new_product'));
         $message->setFrom($this->from);
         $message->setTo($this->receivers);
         $message->setBody($this->twig->render('Emails/product-notify.html.twig', [
-            'product' => $command->product
+            'product' => $product
         ]), 'text/html');
         
         $this->mailer->send($message);
     }
 }
-

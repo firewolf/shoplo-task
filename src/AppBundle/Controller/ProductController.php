@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use SimpleBus\Message\Bus\MessageBus;
-use AppBundle\Query\GetProductList;
+use AppBundle\Service\IProductService;
 
 /**
  * 
@@ -33,24 +33,24 @@ class ProductController extends Controller
     
     /**
      * 
-     * @var GetProductList
+     * @var IProductService
      */
-    private $productListQuery;
+    private $productService;
     
     /**
      * 
      * @param PaginatorInterface $paginator
      * @param MessageBus $commandBus
-     * @param GetProductList $productListQuery
+     * @param IProductService $productListQuery
      */
     public function __construct (
         PaginatorInterface $paginator, 
         MessageBus $commandBus, 
-        GetProductList $productListQuery
+        IProductService $productService
     ) {
         $this->paginator = $paginator;
         $this->commandBus = $commandBus;
-        $this->productListQuery = $productListQuery;
+        $this->productService = $productService;
     }
     
     /**
@@ -95,7 +95,7 @@ class ProductController extends Controller
         $sortFieldName = $request->query->get('sort', $defaultSortFieldName);
         $sortDirection = $request->query->get('direction', $defaultSortDirection);
         
-        $results = $this->productListQuery->execute (
+        $viewList = $this->productService->getList(
             $sortFieldName, 
             $sortDirection, 
             $limit * ($page - 1), 
@@ -109,8 +109,8 @@ class ProductController extends Controller
             ]
         );
         
-        $pagination->setItems ($results->items);
-        $pagination->setTotalItemCount($results->count);
+        $pagination->setItems ($viewList);
+        $pagination->setTotalItemCount($this->productService->countProducts());
         
         return $this->render('product/product-list.html.twig', [
             'pagination' => $pagination

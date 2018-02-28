@@ -9,6 +9,7 @@ use AppBundle\Factory\ProductFactory;
 use AppBundle\CommandHandler\AddProductHandler;
 use AppBundle\Service\ProductServiceImpl;
 use AppBundle\Repository\DoctrineProductRepository;
+use AppBundle\Factory\ProductViewFactory;
 
 /**
  * 
@@ -33,7 +34,10 @@ class AddProductCommandHandlerTest extends KernelTestCase
         $kernel = self::bootKernel();
         
         $this->addProductHandler = new AddProductHandler(
-            new ProductServiceImpl(new DoctrineProductRepository($kernel->getContainer()->get('doctrine'))),
+            new ProductServiceImpl(
+                new DoctrineProductRepository($kernel->getContainer()->get('doctrine')),
+                new ProductViewFactory()
+            ),
             new ProductFactory()
         );
     }

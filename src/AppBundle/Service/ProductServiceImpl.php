@@ -5,6 +5,8 @@ namespace AppBundle\Service;
 use Ramsey\Uuid\Uuid;
 use AppBundle\Entity\Product;
 use AppBundle\Repository\IProductRepository;
+use AppBundle\Factory\ProductViewFactory;
+use AppBundle\Query\ProductView;
 
 /**
  * 
@@ -22,12 +24,20 @@ class ProductServiceImpl implements IProductService
     
     /**
      * 
+     * @var ProductViewFactory
+     */
+    private $productViewFactory;
+    
+    /**
+     * 
      * @param IProductRepository $productRepository
      */
     public function __construct(
-        IProductRepository $productRepository
+        IProductRepository $productRepository,
+        ProductViewFactory $productViewFactory
     ) {
         $this->repository = $productRepository;
+        $this->productViewFactory = $productViewFactory;
     }
     
     /**
@@ -45,12 +55,13 @@ class ProductServiceImpl implements IProductService
      * @see \AppBundle\Service\IProductService::getListQuery()
      */
     public function getList (string $orderBy, string $direction, int $startFrom, int $limit) : array {
-        return $this->repository->findByCriteria (
-            $orderBy, 
-            $direction, 
-            $startFrom, 
+        
+        return array_map ([$this->productViewFactory, 'create'], $this->repository->findByCriteria (
+            $orderBy,
+            $direction,
+            $startFrom,
             $limit
-        );
+        ));
     }
     
     /**
@@ -58,8 +69,10 @@ class ProductServiceImpl implements IProductService
      * {@inheritDoc}
      * @see \AppBundle\Service\IProductService::getById()
      */
-    public function getById (Uuid $id) : Product {
-        return $this->repository->findById($id);
+    public function getById (Uuid $id) : ProductView {
+        return $this->productViewFactory->create (
+            $this->repository->findById($id)
+        );
     }
     
     /**

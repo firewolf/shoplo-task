@@ -4,8 +4,8 @@ namespace AppBundle\Listener;
 
 use AppBundle\Entity\Product;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use SimpleBus\Message\Bus\MessageBus;
-use AppBundle\Command\MailProductAddedCommand;
+use AppBundle\Mail\NewProductAddedMail;
+use AppBundle\Factory\ProductViewFactory;
 
 /**
  * 
@@ -17,20 +17,24 @@ class ProductAddListener
 
     /**
      *
-     * @var MessageBus
+     * @var NewProductAddedMail
      */
-    private $commandBus;
+    private $newProductAddedMail;
     
     /**
      * 
-     * @param \Swift_Mailer $mailer
-     * @param \Twig_Environment $twig
-     * @param array $receivers
-     * @param string $from
+     * @var ProductViewFactory
      */
-    public function __construct(MessageBus $commandBus)
+    private $factory;
+    
+    /**
+     * 
+     * @param NewProductAddedMail $newProductAddedMail
+     */
+    public function __construct(NewProductAddedMail $newProductAddedMail, ProductViewFactory $factory)
     {
-        $this->commandBus = $commandBus;
+        $this->newProductAddedMail = $newProductAddedMail;
+        $this->factory = $factory;
     }
 
     /**
@@ -42,7 +46,8 @@ class ProductAddListener
         $entity = $args->getEntity();
         
         if ($entity instanceof Product) {
-            $this->commandBus->handle(new MailProductAddedCommand($entity));
+            $view = $this->factory->create($entity);
+            $this->newProductAddedMail->sendMessage($view);
         }
     }
 }

@@ -37,8 +37,6 @@ services:
             
     AppBundle\Listener\ProductAddListener:
         public: true
-        arguments:
-            $commandBus: '@simple_bus.command_bus'
         tags:
             - { name: doctrine.event_listener, event: postPersist }
             
@@ -47,11 +45,9 @@ services:
         tags:
             - { name: command_handler, handles: AppBundle\Command\AddProductCommand }
             
-    AppBundle\CommandHandler\MailProductAddedHandler:
+    AppBundle\Mail\NewProductAddedMail:
         public: true
         arguments:
             $receivers: '%new_product_notify%'
             $from: '%source_mail%'
-        tags:
-            - { name: command_handler, handles: AppBundle\Command\MailProductAddedCommand }
             

@@ -7,6 +7,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use AppBundle\Entity\Product;
 use AppBundle\Repository\DoctrineProductRepository;
+use AppBundle\Factory\ProductViewFactory;
 
 class ProductServiceTest extends KernelTestCase
 {
@@ -36,7 +37,10 @@ class ProductServiceTest extends KernelTestCase
         $this->doctrine = $kernel->getContainer()->get('doctrine');
         $this->manager = $this->doctrine->getManager ();
         
-        $this->productService = new ProductServiceImpl(new DoctrineProductRepository($this->doctrine));
+        $this->productService = new ProductServiceImpl(
+            new DoctrineProductRepository($this->doctrine),
+            new ProductViewFactory()
+        );
     }
     
     public function testAdd () {

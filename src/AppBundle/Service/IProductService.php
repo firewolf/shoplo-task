@@ -2,9 +2,9 @@
 
 namespace AppBundle\Service;
 
-use Doctrine\ORM\Query;
 use Ramsey\Uuid\Uuid;
 use AppBundle\Entity\Product;
+use AppBundle\Query\ProductView;
 
 /**
  * 
@@ -20,8 +20,8 @@ interface IProductService
     public function add (Product $product) : void;
     
     /**
-     * //TODO Query
-     * @return Query
+     * //TODO array
+     * @return array - array <ProductView>
      */
     public function getList (string $orderBy, string $direction, int $startFrom, int $limit) : array;
     
@@ -30,7 +30,7 @@ interface IProductService
      * @param Uuid $id
      * @return Product
      */
-    public function getById (Uuid $id) : Product;
+    public function getById (Uuid $id) : ProductView;
     
     /**
      * 
