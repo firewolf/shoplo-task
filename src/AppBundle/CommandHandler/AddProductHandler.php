@@ -28,19 +28,12 @@ class AddProductHandler
     private $productFactory;
     
     /**
-     *
-     * @var NewProductAddedMail
-     */
-    private $newProductAddedMail;
-    
-    /**
      * 
      * @param IProductService $productService
      */
     public function __construct(
         IProductService $productService, 
-        ProductFactory $productFactory,
-        NewProductAddedMail $newProductAddedMail
+        ProductFactory $productFactory
     ) {
         $this->productService = $productService;
         $this->productFactory = $productFactory;
