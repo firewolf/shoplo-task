@@ -33,21 +33,25 @@ services:
     AppBundle\Controller\ProductController:
         public: true
         arguments:
-            $commandBus: '@simple_bus.command_bus'
+            $commandBus: '@command_bus'
+            #$commandBus: '@tactician.commandbus'
             
-    AppBundle\Listener\ProductAddListener:
-        public: true
-        tags:
-            - { name: doctrine.event_listener, event: postPersist }
+    #AppBundle\Listener\ProductAddListener:
+    #    public: true
+    #    tags:
+    #        - { name: doctrine.event_listener, event: postPersist }
             
     AppBundle\CommandHandler\AddProductHandler:
         public: true
         tags:
+            #- { name: tactician.handler, typehints: true }
             - { name: command_handler, handles: AppBundle\Command\AddProductCommand }
             
     AppBundle\Mail\NewProductAddedMail:
-        public: true
+        public: false
         arguments:
             $receivers: '%new_product_notify%'
             $from: '%source_mail%'
+        tags:
+            - { name: command_bus_middleware, priority: 0 }
             

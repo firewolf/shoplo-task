@@ -45,7 +45,6 @@ class AddProductHandler
     public function handle (AddProductCommand $command) : void {
         
         $product = $this->productFactory->create ($command);
-        
         $this->productService->add ($product);
     }
 }
