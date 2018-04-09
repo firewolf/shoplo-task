@@ -52,6 +52,11 @@ services:
         arguments:
             $receivers: '%new_product_notify%'
             $from: '%source_mail%'
+            
+    AppBundle\Middleware\EventMiddleware:
+        public: false
+        arguments:
+            $messageBus: '@event_bus'
         tags:
             - { name: command_bus_middleware, priority: 0 }
             

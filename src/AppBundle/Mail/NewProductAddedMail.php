@@ -4,7 +4,6 @@ namespace AppBundle\Mail;
 
 use AppBundle\Entity\Product;
 use Symfony\Component\Translation\TranslatorInterface;
-use SimpleBus\Message\Bus\Middleware\MessageBusMiddleware;
 use AppBundle\Command\AddProductCommand;
 
 /**
@@ -12,7 +11,7 @@ use AppBundle\Command\AddProductCommand;
  * 
  * @author tmroczkowski
  */
-class NewProductAddedMail implements MessageBusMiddleware
+class NewProductAddedMail
 {
     
     /**
@@ -67,22 +66,11 @@ class NewProductAddedMail implements MessageBusMiddleware
         $this->translator = $translator;
     }
     
-    public function handle($message, callable $next)
-    {
-        
-        $next ($message);
-        
-        if ($message instanceof AddProductCommand) {
-            $this->sendMessage($message);
-        }
-        
-    }
-    
     /**
      *
      * @param Product $product
      */
-    private function sendMessage (AddProductCommand $product) {
+    public function sendMessage (AddProductCommand $product) {
         
         $message = new \Swift_Message();
         $message->setSubject($this->translator->trans('subject.added_new_product', [], 'mail'));
