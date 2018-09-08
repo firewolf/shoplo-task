@@ -22,3 +22,5 @@ przykładowe dane:
 > aby ją usunąć należy wykonać:  
 > symfony-task$ php bin/console doctrine:database:drop --force  
 > symfony-task$ php bin/console doctrine:schema:update --force
+
+test
